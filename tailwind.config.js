@@ -8,7 +8,12 @@ module.exports = {
     "./nuxt.config.{js,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+
+    },
+    fontFamily: {
+      'heading': ['Basteleur']
+    },
   },
   plugins: [],
 }
