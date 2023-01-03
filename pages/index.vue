@@ -2,7 +2,7 @@
   <div class="bg-black min-h-screen ">
     <div class="sm:max-w-md sm:mx-auto mx-8"> 
       <h1 class="font-heading text-white text-5xl pt-24">Donjon23</h1>
-      <Page :page="content" class="text-white "/>
+      <Page :page="content" class="text-white pb-24"/>
     </div>
   </div>
 </template>
