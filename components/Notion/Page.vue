@@ -9,6 +9,7 @@ import Block from './Block.vue'
 
 export default {
     components: { Block },
+    name: 'Page',
     props : {
         page: Object
     }

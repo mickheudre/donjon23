@@ -1,32 +1,32 @@
 <template>
   <div>
-    <h1 v-if="isValidHeading1(block)" class="font-brand font-bold text-white text-4xl my-6">
-            {{ block.heading_1.text[0].text.content }}
-        </h1>
     <h3
       v-if="isValidHeading3(this.block)"
     >
-      {{ this.block.heading_3.text[0].text.content }}
+      {{ this.block.heading_3.rich_text[0].plain_text }}
     </h3>
-    <ImageBlock v-if="isValidImage(this.block)" :link="this.block"/>
     <paragraph
       v-if="isValidParagraph(this.block)"
       class="my-2"
       v-bind:block="this.block"
     >
     </paragraph>
-    <li class="ml-4" v-if="isValidBulletedListItem(this.block)">
-      {{ this.block.bulleted_list_item.text[0].text.content }}
+    <li v-if="isValidBulletedListItem(this.block)">
+      {{ this.block.bulleted_list_item.rich_text[0].plain_text }}
     </li>
+    <toggle v-if="isValidToggleItem(this.block)" :block="this.block" />
+    <Table v-if="isValidTableItem(this.block)" :block="this.block" />
   </div>
 </template>
 
 <script>
 import Paragraph from "./Paragraph.vue";
-import ImageBlock from './ImageBlock.vue'
+import Toggle from "./Toggle.vue"
+import Table from "./Table.vue"
 
 export default {
-  components: { Paragraph, ImageBlock },
+  name: 'Block',
+  components: { Paragraph, Toggle, Table },
   props: {
     block: Object,
   },
@@ -35,23 +35,12 @@ export default {
       if (block.type !== "paragraph") {
         return false;
       }
-      if (block.paragraph.text.length == 0) {
-        return false;
-      }
-      return true;
-    },
-    isValidImage(block) {
-      if (block.type !== "image") {
+
+      if (block.paragraph.rich_text.length == 0) {
         return false;
       }
 
-      return true;
-    },
-    isValidHeading1(block) {
-      if (block.type !== "heading_1") {
-        return false;
-      }
-      if (block.heading_1.text.length == 0) {
+      if (block.paragraph.rich_text[0].plain_text.length == 0) {
         return false;
       }
       return true;
@@ -60,7 +49,11 @@ export default {
       if (block.type !== "heading_3") {
         return false;
       }
-      if (block.heading_3.text.length == 0) {
+      if (block.heading_3.rich_text.length == 0) {
+        return false;
+      }
+
+      if (block.heading_3.rich_text[0].plain_text.length == 0) {
         return false;
       }
       return true;
@@ -69,9 +62,41 @@ export default {
       if (block.type !== "bulleted_list_item") {
         return false;
       }
-      if (block.bulleted_list_item.text.length == 0) {
+
+      if (block.bulleted_list_item.rich_text.length == 0) {
         return false;
       }
+
+      if (block.bulleted_list_item.rich_text[0].plain_text.length == 0) {
+        return false;
+      }
+      return true;
+    },
+    isValidToggleItem(block) {
+      if (block.type !== "toggle") {
+        return false;
+      }
+      
+      if (block.toggle.rich_text.length == 0) {
+        return false;
+      }
+
+      if (block.toggle.rich_text[0].plain_text.length == 0) {
+        return false;
+      }
+      return true;
+    },
+    isValidTableItem(block) {
+      if (block.type !== "table") {
+        return false;
+      }
+      // if (block.table.rich_text.length == 0) {
+      //   return false;
+      // }
+
+      // if (block.toggle.rich_text[0].plain_text.length == 0) {
+      //   return false;
+      // }
       return true;
     },
   },

@@ -47,7 +47,7 @@ export default {
   axios: {
     headers: {
       common: {
-        'Notion-Version': '2021-05-13',
+        'Notion-Version': '2022-06-28',
        'Authorization': process.env.NOTION_TOKEN
       }
     }
